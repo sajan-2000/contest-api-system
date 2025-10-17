@@ -1,0 +1,369 @@
+{
+	"info": {
+		"_postman_id": "c496e618-e9ab-4c30-946e-257aac872c77",
+		"name": "contest-api-collection",
+		"description": "A backend system for hosting online contests. This application manages users with different roles, various contest types, real-time scoring, and leaderboards. It features a secure, role-based API for both contest participants and administrators.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "44849036"
+	},
+	"item": [
+		{
+			"name": "Admin-collection",
+			"item": [
+				{
+					"name": "Add-Contest",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{vault:json-web-token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Advanced Physics\",\n    \"description\": \"Premium physics questions\",\n    \"start_time\": \"2024-01-01T10:00:00Z\",\n    \"end_time\": \"2024-12-31T23:59:59Z\",\n    \"prize_info\": \"Winner gets $500\",\n    \"access_level\": \"VIP\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/admin/contests",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"admin",
+								"contests"
+							]
+						},
+						"description": "It will add one contest using the body inputs"
+					},
+					"response": []
+				},
+				{
+					"name": "Add-Question-To-Contest",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{vault:json-web-token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"question_text\": \"What is 5 * 3?\",\n    \"question_type\": \"single-select\",\n    \"correct_answers\": [\"15\"],\n    \"options\": [\"12\", \"15\", \"18\", \"20\"]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/admin/contests/ebaaaef8-d1d8-4060-a8df-2d58c8c19eda/questions",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"admin",
+								"contests",
+								"ebaaaef8-d1d8-4060-a8df-2d58c8c19eda",
+								"questions"
+							]
+						},
+						"description": "It will add questions against the contests"
+					},
+					"response": []
+				}
+			],
+			"description": "Admin collection for creating contests and adding question answers"
+		},
+		{
+			"name": "User-collection",
+			"item": [
+				{
+					"name": "Login-user",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"email\": \"vip@example.com\",\r\n  \"password\": \"password123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/user/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"user",
+								"login"
+							]
+						},
+						"description": "To login a user."
+					},
+					"response": []
+				},
+				{
+					"name": "Register-user",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"vipuser\",\n    \"email\": \"vip@example.com\",\n    \"password\": \"password123\",\n    \"role\": \"VIP\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/user/register",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"user",
+								"register"
+							]
+						},
+						"description": "To register a user."
+					},
+					"response": []
+				},
+				{
+					"name": "Get-User-History",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{vault:json-web-token}}"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3000/api/user/history",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"user",
+								"history"
+							]
+						},
+						"description": "To fetch a user's history."
+					},
+					"response": []
+				},
+				{
+					"name": "Get-Prizes",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{vault:json-web-token}}"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3000/api/user/prizes",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"user",
+								"prizes"
+							]
+						},
+						"description": "Fetchs prizes against the contest"
+					},
+					"response": []
+				}
+			],
+			"description": "This collection have all the user related apis"
+		},
+		{
+			"name": "Contest-collection",
+			"item": [
+				{
+					"name": "List-Contests(public)",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{vault:json-web-token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3000/api/contests",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"contests"
+							]
+						},
+						"description": "Fetchs contests for public as well as for normal and vips"
+					},
+					"response": []
+				},
+				{
+					"name": "Get-Contest-details",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{vault:json-web-token}}"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3000/api/contests/ebaaaef8-d1d8-4060-a8df-2d58c8c19eda",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"contests",
+								"ebaaaef8-d1d8-4060-a8df-2d58c8c19eda"
+							]
+						},
+						"description": "Fetchs specific details about the contest along with the questions and options"
+					},
+					"response": []
+				},
+				{
+					"name": "Answer-Submission",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{vault:json-web-token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"answers\": {\n        \"4b1f0532-77ba-4a35-9d68-70f8a4ab9191\": \"4\",\n        \"f5038821-a58d-4e33-ace1-d6179dbb25d6\": \"15\"\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/contests/ebaaaef8-d1d8-4060-a8df-2d58c8c19eda/submit",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"contests",
+								"ebaaaef8-d1d8-4060-a8df-2d58c8c19eda",
+								"submit"
+							]
+						},
+						"description": "Submits answer"
+					},
+					"response": []
+				},
+				{
+					"name": "LeaderBoard",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/leaderboard/ebaaaef8-d1d8-4060-a8df-2d58c8c19eda",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"leaderboard",
+								"ebaaaef8-d1d8-4060-a8df-2d58c8c19eda"
+							]
+						},
+						"description": "Fetchs the Top leaderboard info"
+					},
+					"response": []
+				}
+			],
+			"description": "Contest api collection"
+		},
+		{
+			"name": "health-check",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/health",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"health"
+					]
+				},
+				"description": "To check the health of the Application."
+			},
+			"response": []
+		}
+	]
+}
